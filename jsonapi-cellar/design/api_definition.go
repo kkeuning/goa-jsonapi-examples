@@ -23,7 +23,7 @@ var _ = API("jsonapi-cellar", func() {
 		Description("goa guide")
 		URL("http://goa.design/getting-started.html")
 	})
-	Host("cellar.goa.design")
+	Host("localhost:8080")
 	Scheme("http")
 	BasePath("/cellar")
 
