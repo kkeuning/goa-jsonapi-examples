@@ -41,7 +41,9 @@ Here are very secret credentials:
 * password: lover
 `)
 	})
-
+	Trait("jsonapi", func() {
+		ContentType("application/vnd.api+json")
+	})
 	ResponseTemplate(Created, func(pattern string) {
 		Description("Resource created")
 		Status(201)

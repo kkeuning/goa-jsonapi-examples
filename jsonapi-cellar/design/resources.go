@@ -89,12 +89,7 @@ var _ = Resource("bottle", func() {
 		Params(func() {
 			Param("years", ArrayOf(Integer), "Filter by years")
 		})
-		Response(OK, func() {
-			Media(CollectionOf(Bottle, func() {
-				View("default")
-				View("tiny")
-			}))
-		})
+		Response(OK)
 		Response(NotFound)
 	})
 
@@ -127,9 +122,8 @@ var _ = Resource("bottle", func() {
 			POST(""),
 		)
 		Description("Record new bottle")
-		Payload(BottlePayload, func() {
-			Required("name", "vineyard", "varietal", "vintage", "color")
-		})
+		Payload(BottlePayload)
+		//Required("name", "vineyard", "varietal", "vintage", "color")
 		Response(Created, "^/accounts/[0-9]+/bottles/[0-9]+$")
 	})
 
