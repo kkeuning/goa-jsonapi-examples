@@ -5,9 +5,16 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
-// Account is the account resource media type.
+// Account is the account resource media type.  The content type header will be "application/vnd.api+json"
+// The data: {type: } will be set to "account" by default
 var Account = MediaType("application/vnd.account+json", func() {
-	Description("A tenant account")
+	Description(`A tenant account
+
+The content type header will be "application/vnd.api+json"
+
+data: {type: "account"} will be set by default
+`)
+
 	UseTrait("jsonapi") // Will set content type to "application/vnd.api+json"
 	Attributes(func() {
 		Attribute("data", func() {
@@ -46,10 +53,16 @@ var Account = MediaType("application/vnd.account+json", func() {
 	})
 })
 
-// Bottle is the bottle resource media type.
+// Bottle is the bottle resource media type.  The content type header will be "application/vnd.api+json"
+// The data: {type: } will be set to "bottle" by default
 var Bottle = MediaType("application/vnd.bottle+json", func() {
 	UseTrait("jsonapi") // Will set content type to "application/vnd.api+json"
-	Description("A bottle of wine")
+	Description(`A bottle of wine
+
+The content type header will be "application/vnd.api+json"
+
+data: {type: "bottle"} will be set by default
+`)
 	Reference(BottlePayload)
 	Attributes(func() {
 		Attribute("data", func() {
@@ -155,6 +168,7 @@ var Bottle = MediaType("application/vnd.bottle+json", func() {
 	})
 })
 
+//For use in jsonapi collections.  Not to be used alone in responses.
 var BottleResourceObject = MediaType("bottleresource", func() {
 	Reference(BottlePayload)
 	Attribute("id", Integer, "ID of bottle")
@@ -171,14 +185,6 @@ var BottleResourceObject = MediaType("bottleresource", func() {
 		Attribute("updated_at", DateTime, "Date of last update")
 		// Attributes below inherit from the base type
 		Attribute("name")
-		Attribute("vineyard")
-		Attribute("varietal")
-		Attribute("vintage")
-		Attribute("color")
-		Attribute("sweetness")
-		Attribute("country")
-		Attribute("region")
-		Attribute("review")
 	})
 	View("default", func(){
 		Attribute("id")
@@ -190,13 +196,21 @@ var BottleResourceObject = MediaType("bottleresource", func() {
 	})
 })
 
-// ListofBottles is a jsonapi type for multiple bottles
+// ListofBottles is a jsonapi type for multiple bottles.
+// The content type header will be "application/vnd.api+json"
+// The data: {type: } will be set to "bottle" by default.
 var Listofbottles = MediaType("application/vnd.listofbottles+json", func() {
 	UseTrait("jsonapi") // Will set content type to "application/vnd.api+json"
-	Description("A bottle of wine")
+	Description(`A collection of wine bottles
+
+The content type header will be "application/vnd.api+json"
+
+data: {type: "bottle"} will be set by default
+`)
 	Reference(BottlePayload)
 	Attributes(func() {
 		Attribute("data", CollectionOf(BottleResourceObject))
+		Attribute("type")
 		Attribute("relationships", func() {
 			Attribute("account", Account, "Account that owns bottle")
 		})
@@ -210,27 +224,7 @@ var Listofbottles = MediaType("application/vnd.listofbottles+json", func() {
 		Attribute("data", func() {
 			Attribute("id")
 			Attribute("type")
-			Attribute("attributes", func() {
-				Attribute("href", String, "API href of bottle")
-				Attribute("rating")
-				Attribute("account", Account, "Account that owns bottle")
-				Attribute("created_at", DateTime, "Date of creation")
-				Attribute("updated_at", DateTime, "Date of last update")
-				// Attributes below inherit from the base type
-				Attribute("name")
-				Attribute("vineyard")
-				Attribute("varietal")
-				Attribute("vintage")
-				Attribute("color")
-				Attribute("sweetness")
-				Attribute("country")
-				Attribute("region")
-				Attribute("review")
-				Attribute("account", func() {
-					View("tiny")
-				})
-
-			})
+			Attribute("data", CollectionOf(BottleResourceObject))
 			Required("id")
 		})
 		Attribute("relationships", func() {
@@ -239,39 +233,6 @@ var Listofbottles = MediaType("application/vnd.listofbottles+json", func() {
 		Attribute("links", func() {
 			Attribute("self", String, "API href of bottle")
 			Attribute("related", String, "API href of account")
-		})
-	})
-
-	View("tiny", func() {
-		Attribute("data", func() {
-			Attribute("id")
-			Attribute("type")
-			Attribute("attributes", func() {
-				Attribute("name")
-				Attribute("rating")
-			})
-		})
-	})
-
-	View("full", func() {
-		Attribute("data", func() {
-			Attribute("id")
-			Attribute("type")
-			Attribute("attributes", func() {
-				Attribute("name")
-				Attribute("account")
-				Attribute("rating")
-				Attribute("vineyard")
-				Attribute("varietal")
-				Attribute("vintage")
-				Attribute("color")
-				Attribute("sweetness")
-				Attribute("country")
-				Attribute("region")
-				Attribute("review")
-				Attribute("created_at")
-				Attribute("updated_at")
-			})
 		})
 	})
 })
