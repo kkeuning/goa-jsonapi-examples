@@ -169,7 +169,7 @@ data: {type: "bottle"} will be set by default
 })
 
 //For use in jsonapi collections.  Not to be used alone in responses.
-var BottleResourceObject = MediaType("bottleresource", func() {
+var BottleResourceObject = MediaType("bottle-resource", func() {
 	Reference(BottlePayload)
 	Attribute("id", Integer, "ID of bottle")
 	Attribute("type", String, func() {
@@ -196,7 +196,7 @@ var BottleResourceObject = MediaType("bottleresource", func() {
 	})
 })
 
-// ListofBottles is a jsonapi type for multiple bottles.
+// ListOfBottles is a jsonapi type for multiple bottles.
 // The content type header will be "application/vnd.api+json"
 // The data: {type: } will be set to "bottle" by default.
 var ListOfBottles = MediaType("application/vnd.listofbottles+json", func() {

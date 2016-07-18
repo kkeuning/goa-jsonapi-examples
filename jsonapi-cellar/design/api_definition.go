@@ -26,20 +26,10 @@ var _ = API("jsonapi-cellar", func() {
 	Host("localhost:8080")
 	Scheme("http")
 	BasePath("/cellar")
-
 	Origin("http://swagger.goa.design", func() {
 		Methods("GET", "POST", "PUT", "PATCH", "DELETE")
 		MaxAge(600)
 		Credentials()
-	})
-
-	BasicAuthSecurity("admin_pass", func() {
-		Description(`Basic authentication method, for global admin authentication.
-
-Here are very secret credentials:
-* username: wine
-* password: lover
-`)
 	})
 	Trait("jsonapi", func() {
 		ContentType("application/vnd.api+json")
