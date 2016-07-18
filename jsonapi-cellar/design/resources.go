@@ -89,7 +89,7 @@ var _ = Resource("bottle", func() {
 		Params(func() {
 			Param("years", ArrayOf(Integer), "Filter by years")
 		})
-		Response(OK, Listofbottles)
+		Response(OK, ListOfBottles)
 		Response(NotFound)
 	})
 

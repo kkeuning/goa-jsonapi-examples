@@ -186,7 +186,7 @@ var BottleResourceObject = MediaType("bottleresource", func() {
 		// Attributes below inherit from the base type
 		Attribute("name")
 	})
-	View("default", func(){
+	View("default", func() {
 		Attribute("id")
 		Attribute("type")
 		Attribute("attributes", func() {
@@ -199,7 +199,7 @@ var BottleResourceObject = MediaType("bottleresource", func() {
 // ListofBottles is a jsonapi type for multiple bottles.
 // The content type header will be "application/vnd.api+json"
 // The data: {type: } will be set to "bottle" by default.
-var Listofbottles = MediaType("application/vnd.listofbottles+json", func() {
+var ListOfBottles = MediaType("application/vnd.listofbottles+json", func() {
 	UseTrait("jsonapi") // Will set content type to "application/vnd.api+json"
 	Description(`A collection of wine bottles
 
